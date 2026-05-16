@@ -10,7 +10,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 app.use(cors({
-  origin: ["https://sign-up-login-gamma.vercel.app/login","http://localhost:5173"],
+  origin: ["https://sign-up-login-gamma.vercel.app/login"],
   credentials: true
 }));
 
@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("Backend running");
-});
+}); 
 
 app.use("/api",authRoutes)
 
