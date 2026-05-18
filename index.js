@@ -1,28 +1,30 @@
 const express = require("express");
 const app = express();
-require("dotenv").config();
-const authRoutes=require('./routes/authRoute')
-const connectDb=require('./config/db')
 
-connectDb()
+require("dotenv").config();
+
+const authRoutes = require("./routes/authRoute");
+const connectDb = require("./config/db");
 
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-app.use(cors({
-  origin: ["https://sign-up-login-gamma.vercel.app/login"],
-  credentials: true
-}));
+connectDb();
+
+app.use(
+  cors({
+    origin: "https://sign-up-login-gamma.vercel.app",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("Backend running");
-}); 
-
-app.use("/api",authRoutes)
-
-app.listen(8000, () => {
-  console.log("Server running on 8000");
 });
+
+app.use("/api", authRoutes);
+
+module.exports = app;
