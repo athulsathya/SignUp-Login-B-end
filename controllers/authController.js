@@ -43,7 +43,7 @@ exports.registerUser = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({
+    res.status(200).json({
       message: `${userType} registered successfully`,
       data: {
         id: newUser._id,
@@ -64,7 +64,7 @@ exports.loginUser=async(req,res)=>{
        const {email,userName,password}=req.body
        const user=await User.findOne({email})
        if(!user){
-   return res.status(404).json({message:'User not found',error:err.message})
+   return res.status(400).json({message:'User not found'})
        }
        const isMatch=await bCrypt.compare(password,user.password)
                                 //  users password    hashed pasword from server
@@ -83,7 +83,7 @@ exports.loginUser=async(req,res)=>{
             return res.status(200).json({message:'Login success',token,user:safeUser})       //AND ADD USER:SAFEUSER FOR PRINTING
     }
     catch(err){
-res.status(505).json({message:err.message})
+res.status(500).json({message:err.message})
     }
 }
 
